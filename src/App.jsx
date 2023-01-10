@@ -68,6 +68,7 @@ function App() {
           captchaValid={captchaValid}
           setCaptchaValid={setCaptchaValid}
           formSubmitted={formSubmitted}
+          size={6}
         />
 
         <button

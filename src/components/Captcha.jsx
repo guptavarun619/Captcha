@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { generateCaptcha } from "../utils/captcha";
 
-function Captcha({ captchaValid, setCaptchaValid, formSubmitted }) {
+function Captcha({ captchaValid, setCaptchaValid, formSubmitted, size }) {
   const [captcha, setCaptcha] = useState("");
   const [userInput, setUserInput] = useState("");
   const [message, setMessage] = useState("");
 
   const handleSetCaptcha = () => {
-    const captcha = generateCaptcha(6);
+    const captcha = generateCaptcha(size);
     setUserInput("");
     setCaptcha(captcha);
   };
