@@ -26,14 +26,14 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <h1 className="py-1 text-3xl text-center font-bold">
+    <div className="App dark:bg-slate-900 h-screen w-screen">
+      <h1 className="py-1 text-3xl text-center font-bold dark:text-white">
         Captcha Assignment 🚀
       </h1>
       <div className="form-message container max-w-sm ml-auto mr-auto">
         {formSubmitted && (
           <div className="py-4 mx-8 shadow-xl rounded-lg">
-            <h3 className="text-xl text-center font-semibold">
+            <h3 className="text-xl text-center font-semibold dark:text-white">
               Your form was submitted successfully 🎉
             </h3>
             <div className="container mt-2 flex justify-center">
