@@ -1,52 +1,82 @@
-import { useEffect, useState } from "react";
-import { generateCaptcha } from "./utils/captcha";
+import { useRef, useState } from "react";
+import Captcha from "./components/Captcha";
 
 function App() {
-  const [captcha, setCaptcha] = useState("");
-  const [userInput, setUserInput] = useState("");
-  // const [loading, setLoading] = useState(false);
+  const [captchaValid, setCaptchaValid] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
-  const handleSetCaptcha = () => {
-    const captcha = generateCaptcha();
-    setCaptcha(captcha);
+  const nameRef = useRef();
+  const phoneRef = useRef();
+  const addressRef = useRef();
+
+  const handleSubmitForm = () => {
+    console.log(nameRef.current.value);
+    console.log(phoneRef.current.value);
+    console.log(addressRef.current.value);
+    console.log("Captcha must be validated so form was submitted");
+    setFormSubmitted(true);
   };
 
-  const handleChangeInput = (event) => {
-    setUserInput(event.target.value);
+  const handleResetForm = () => {
+    setFormSubmitted(false);
+    // setCaptchaValid(false);
+    nameRef.current.value = "";
+    phoneRef.current.value = "";
+    addressRef.current.value = "";
   };
-
-  useEffect(() => {
-    handleSetCaptcha();
-  }, []);
 
   return (
     <div className="App">
       <h1 className="py-1 text-3xl text-center font-bold">
-        Capta Assignment : 🚀 In Progress
+        Captcha Assignment 🚀
       </h1>
-      <div className="container max-w-xs p-4 ml-auto mr-auto rounded-lg shadow-lg">
-        <div className="capta-generated flex gap-2">
-          {/* user-select: none;
-        text-decoration:line-through;
-        font-style: italic; */}
-          <div className="capta-img grow text-center text-xl select-none line-through italic rounded-lg bg-gray-300">
-            {captcha}
+      <div className="form-message container max-w-sm ml-auto mr-auto">
+        {formSubmitted && (
+          <div className="py-4 mx-8 shadow-xl rounded-lg">
+            <h3 className="text-xl text-center font-semibold">
+              Your form was submitted successfully 🎉
+            </h3>
+            <div className="container mt-2 flex justify-center">
+              <button className="btn" onClick={handleResetForm}>
+                Reset form
+              </button>
+            </div>
           </div>
-          <button
-            className="px-3 py-2 text-white font-medium rounded-lg text-sm bg-cyan-600  hover:bg-cyan-800 dark:bg-cyan-600 dark:hover:bg-cyan-700 "
-            onClick={handleSetCaptcha}
-          >
-            Reset
-          </button>
-        </div>
-        <div className="captcha-input mt-4">
-          <input
-            type="text"
-            value={userInput}
-            onChange={handleChangeInput}
-            className="w-full border-2 rounded-lg"
-          />
-        </div>
+        )}
+      </div>
+      <div className="form container max-w-xl p-4 ml-auto mr-auto flex flex-col gap-4 rounded-lg shadow-lg">
+        <input
+          type="text"
+          placeholder="Name"
+          ref={nameRef}
+          className="text-input"
+        />
+        <input
+          type="tel"
+          placeholder="Phone"
+          ref={phoneRef}
+          className="text-input"
+        />
+        <input
+          type="text"
+          placeholder="Address"
+          ref={addressRef}
+          className="text-input"
+        />
+
+        <Captcha
+          captchaValid={captchaValid}
+          setCaptchaValid={setCaptchaValid}
+          formSubmitted={formSubmitted}
+        />
+
+        <button
+          className="btn"
+          onClick={handleSubmitForm}
+          disabled={!captchaValid}
+        >
+          Submit Form
+        </button>
       </div>
     </div>
   );
